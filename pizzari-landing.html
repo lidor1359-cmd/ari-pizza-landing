@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פיצארי - פיצה ביתית כשרה מאשדוד | ארי ונעם</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #d32f2f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d32f2f;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #d32f2f 0%, #f57c00 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            animation: fadeInUp 1s ease 0.1s backwards;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            line-height: 1.8;
+        }
+
+        .kosher-badge {
+            display: inline-block;
+            background: white;
+            color: #d32f2f;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #d32f2f;
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #fff3e0;
+        }
+
+        /* Team Section with Photo */
+        .team-section {
+            padding: 100px 2rem;
+            background: #fff;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .team-photo {
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        .team-photo img {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            border: 6px solid #f57c00;
+            transition: transform 0.3s;
+        }
+
+        .team-photo img:hover {
+            transform: scale(1.02);
+        }
+
+        .team-text h2 {
+            font-size: 3rem;
+            color: #d32f2f;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        .team-text p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .member-card {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-right: 4px solid #f57c00;
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateX(-5px);
+        }
+
+        .member-card h3 {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .member-card .age {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .member-card p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #f57c00 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.3);
+        }
+
+        .highlight-box h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .highlight-box p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 100px 2rem;
+            background: linear-gradient(to bottom, #f5f5f5 0%, #fff 100%);
+        }
+
+        .menu h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #d32f2f;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+        }
+
+        .menu-subtitle {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .menu-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid #f57c00;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .menu-item-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-item h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .menu-item p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Location Section */
+        .location {
+            padding: 100px 2rem;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            text-align: center;
+        }
+
+        .location h2 {
+            font-size: 3rem;
+            color: #d32f2f;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        .location-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .location p {
+            font-size: 1.5rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 2rem;
+            background: linear-gradient(135deg, #f57c00 0%, #d32f2f 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        .contact p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-item-icon {
+            font-size: 3rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .contact-item a:hover {
+            transform: scale(1.1);
+        }
+
+        .contact-item span {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: #1b120e;
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.3rem;
+            }
+
+            .team-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                🍕 פיצארי
+            </div>
+            <ul class="nav-links">
+                <li><a href="#team">הסיפור שלנו</a></li>
+                <li><a href="#menu">התפריט</a></li>
+                <li><a href="#location">מיקום</a></li>
+                <li><a href="#contact">הזמנה</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>פיצארי 🍕</h1>
+            <p class="tagline">פיצה ביתית כשרה מהלב - ארי ונעם</p>
+            <div class="kosher-badge">✡️ כשר למהדרין</div>
+            <p>מאשדוד באהבה - פיצה ביתית אמיתית, עשויה מחומרים איכותיים ובהרבה תשוקה</p>
+            <a href="#contact" class="cta-button">הזמינו עכשיו!</a>
+        </div>
+    </section>
+
+    <section id="team" class="team-section">
+        <div class="team-container">
+            <div class="team-photo">
+                <img src="ari-naam-photo.jpg" alt="ארי ונעם - הצוות שלנו" id="team-image">
+            </div>
+            <div class="team-text">
+                <h2>הצוות המנצח שלנו 👫</h2>
+                <p>
+                    ארי ונעם הם לא רק אח ואחות - הם חברים הכי טובים שחולקים חלום משותף: להביא את הפיצה הביתית הכשרה הכי טעימה לכל בית באשדוד ובסביבה!
+                </p>
+                <p>
+                    מה שהתחיל כתשוקה של ארי לבישול ואפייה, הפך לפרויקט משפחתי מרגש. יחד, הם משלבים את הכישרון הקולינרי של ארי עם הניסיון והמקצועיות של נעם.
+                </p>
+
+                <div class="team-members">
+                    <div class="member-card">
+                        <h3>ארי 👨‍🍳</h3>
+                        <div class="age">בן 13</div>
+                        <p>השף הצעיר והמוכשר שלנו! אוהב לבשל ולאפות, ואחראי על יצירת הפיצות המדהימות שלנו</p>
+                    </div>
+                    <div class="member-card">
+                        <h3>נעם 👩‍💼</h3>
+                        <div class="age">בת 28</div>
+                        <p>האחות הגדולה והחברה הכי טובה של ארי. מנהלת את העסק ודואגת שכל פיצה תגיע אליכם מושלמת</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>🎯 החלום שלנו</h3>
+                    <p>לפתוח פודטראק/מסעדה מצליחה ולהביא פיצה ביתית כשרה ואיכותית לכל פינה באשדוד ובארץ!</p>
+                    <p style="margin-top: 1rem; font-size: 1.1rem;">תמכו ביזמים צעירים שעוקבים אחרי החלום שלהם ❤️</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <h2>התפריט הכשר שלנו 🍕</h2>
+        <p class="menu-subtitle">כל פיצה מוכנה בידיים שלנו עם אהבה, מרכיבים איכותיים וכשרות מהודרת</p>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="menu-item-icon">🧀</div>
+                <h3>מרגריטה קלאסית</h3>
+                <p>מוצרלה טרייה, רטב עגבניות ביתי, בזיליקום ושמן זית על בצק ביתי מיוחד</p>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🍄</div>
+                <h3>פטריות וזיתים</h3>
+                <p>פטריות טריות, זיתים, מוצרלה ורטב עגבניות מיוחד שלנו</p>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🌱</div>
+                <h3>גן ירקות</h3>
+                <p>ירקות טריים, פטריות, פלפלים צבעוניים, בצל וזיתים</p>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🧄</div>
+                <h3>שום ושמן זית</h3>
+                <p>בצק ביתי עם שום, שמן זית, עשבי תיבול ומוצרלה</p>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">⭐</div>
+                <h3>המיוחדת של ארי</h3>
+                <p>היצירה החתמית של השף ארי - שילוב ייחודי של תוספות צמחוניות מפתיעות</p>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🎨</div>
+                <h3>בנה לעצמך</h3>
+                <p>בחרו את התוספות הכשרות האהובות עליכם ונכין לכם את הפיצה המושלמת</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="location" class="location">
+        <h2>איפה אנחנו? 📍</h2>
+        <div class="location-icon">🏙️</div>
+        <p>
+            אנחנו פועלים מאשדוד, עיר החוף היפה שלנו! 🌊<br>
+            משלוחים כשרים לכל רחבי אשדוד והסביבה<br>
+            בקרוב - הפודטראק הכשר שלנו יגיע גם אליכם!
+        </p>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>מוכנים להזמין? 📞</h2>
+        <p>תמכו ביזמים צעירים שעוקבים אחר החלום שלהם! צרו קשר להזמנת הפיצה הביתית הכשרה המושלמת שלכם</p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-item-icon">📱</div>
+                <a href="tel:+972501234567">050-123-4567</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <a href="mailto:pizzari.ashdod@gmail.com">pizzari.ashdod@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <span>אשדוד, ישראל</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <a href="https://instagram.com/pizzari_ashdod" class="cta-button" style="color: #d32f2f;">📸 עקבו אחרינו באינסטגרם</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 פיצארי - ארי ונעם | נעשה באהבה והרבה תשוקה מאשדוד ❤️🍕</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">✡️ כשר למהדרין</p>
+    </footer>
+
+    <script>
+        // Handle image loading - if file doesn't exist, show placeholder
+        const img = document.getElementById('team-image');
+        img.onerror = function() {
+            // Create a canvas placeholder if image doesn't load
+            const canvas = document.createElement('canvas');
+            canvas.width = 500;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#f3ebe7';
+            ctx.fillRect(0, 0, 500, 600);
+
+            // Text
+            ctx.fillStyle = '#d32f2f';
+            ctx.font = 'bold 40px Heebo';
+            ctx.textAlign = 'center';
+            ctx.fillText('ארי ונעם', 250, 280);
+            ctx.font = '30px Heebo';
+            ctx.fillText('🍕 פיצארי 🍕', 250, 340);
+
+            this.src = canvas.toDataURL();
+        };
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 1)';
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 15px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "ai-dev-workflow",
+  "version": "1.0.0",
+  "description": "AI-Assisted App Development Workflow Guide with Hot Reloading",
+  "main": "ai-dev-workflow.html",
+  "scripts": {
+    "start": "live-server --host=0.0.0.0 --port=8080 --watch=. --open=ai-dev-workflow.html"
+  },
+  "keywords": [
+    "ai",
+    "development",
+    "workflow",
+    "docker"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}

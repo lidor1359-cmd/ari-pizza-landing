@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTools Hub - Discover Amazing Developer Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Hero Section -->
+    <section class="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 float"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 float" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 float" style="animation-delay: 4s;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center fade-in">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+                DevTools Hub
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto">
+                Discover, share, and explore the best developer tools handpicked by the community
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <button onclick="scrollToSection('tools')" class="px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-100 transform hover:scale-105 transition">
+                    Browse Tools
+                </button>
+                <button onclick="scrollToSection('waitlist')" class="px-8 py-4 glass text-white rounded-full font-bold hover:bg-white hover:bg-opacity-20 transform hover:scale-105 transition">
+                    Join Waitlist
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="glass p-6 rounded-2xl">
+                    <div class="text-4xl font-bold" id="toolCount">0</div>
+                    <div class="text-gray-200 mt-2">Developer Tools</div>
+                </div>
+                <div class="glass p-6 rounded-2xl">
+                    <div class="text-4xl font-bold" id="waitlistCount">0</div>
+                    <div class="text-gray-200 mt-2">Community Members</div>
+                </div>
+                <div class="glass p-6 rounded-2xl">
+                    <div class="text-4xl font-bold">24/7</div>
+                    <div class="text-gray-200 mt-2">Always Updated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-4">Featured Tools</h2>
+            <p class="text-gray-400 text-center mb-12 text-xl">Curated developer tools to supercharge your workflow</p>
+
+            <!-- Category Filter -->
+            <div class="flex justify-center gap-4 mb-12 flex-wrap">
+                <button onclick="filterTools('all')" class="filter-btn px-6 py-2 bg-purple-600 rounded-full hover:bg-purple-700 transition">All</button>
+                <button onclick="filterTools('Backend')" class="filter-btn px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">Backend</button>
+                <button onclick="filterTools('UI Components')" class="filter-btn px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">UI</button>
+                <button onclick="filterTools('Deployment')" class="filter-btn px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">Deployment</button>
+                <button onclick="filterTools('Styling')" class="filter-btn px-6 py-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">Styling</button>
+            </div>
+
+            <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tools will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Submit Tool Section -->
+    <section id="submit" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6 max-w-2xl">
+            <h2 class="text-5xl font-bold text-center mb-4">Submit a Tool</h2>
+            <p class="text-gray-400 text-center mb-12 text-xl">Know an amazing tool? Share it with the community!</p>
+
+            <form id="submitToolForm" class="bg-gray-900 p-8 rounded-2xl shadow-xl">
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-semibold">Tool Name *</label>
+                    <input type="text" id="toolName" required class="w-full px-4 py-3 bg-gray-800 rounded-lg focus:ring-2 focus:ring-purple-600 outline-none">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-semibold">Description *</label>
+                    <textarea id="toolDescription" required rows="3" class="w-full px-4 py-3 bg-gray-800 rounded-lg focus:ring-2 focus:ring-purple-600 outline-none"></textarea>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-semibold">URL *</label>
+                    <input type="url" id="toolUrl" required class="w-full px-4 py-3 bg-gray-800 rounded-lg focus:ring-2 focus:ring-purple-600 outline-none">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-semibold">Category *</label>
+                    <select id="toolCategory" required class="w-full px-4 py-3 bg-gray-800 rounded-lg focus:ring-2 focus:ring-purple-600 outline-none">
+                        <option value="">Select a category</option>
+                        <option value="Backend">Backend</option>
+                        <option value="Frontend">Frontend</option>
+                        <option value="UI Components">UI Components</option>
+                        <option value="Deployment">Deployment</option>
+                        <option value="Styling">Styling</option>
+                        <option value="Testing">Testing</option>
+                        <option value="Scraping">Scraping</option>
+                        <option value="Version Control">Version Control</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-semibold">Your Name</label>
+                    <input type="text" id="submitterName" class="w-full px-4 py-3 bg-gray-800 rounded-lg focus:ring-2 focus:ring-purple-600 outline-none">
+                </div>
+                <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition">
+                    Submit Tool
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="py-20 bg-gradient-to-br from-purple-900 to-blue-900">
+        <div class="container mx-auto px-6 max-w-2xl text-center">
+            <h2 class="text-5xl font-bold mb-4">Join Our Community</h2>
+            <p class="text-gray-200 mb-12 text-xl">Be the first to know about new tools and features</p>
+
+            <form id="waitlistForm" class="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-2xl shadow-xl">
+                <div class="mb-6">
+                    <input type="text" id="waitlistName" placeholder="Your Name" class="w-full px-4 py-3 bg-white bg-opacity-20 rounded-lg focus:ring-2 focus:ring-white outline-none placeholder-gray-300">
+                </div>
+                <div class="mb-6">
+                    <input type="email" id="waitlistEmail" required placeholder="your@email.com" class="w-full px-4 py-3 bg-white bg-opacity-20 rounded-lg focus:ring-2 focus:ring-white outline-none placeholder-gray-300">
+                </div>
+                <div class="mb-6">
+                    <input type="text" id="waitlistRole" placeholder="Your Role (e.g., Developer, Designer)" class="w-full px-4 py-3 bg-white bg-opacity-20 rounded-lg focus:ring-2 focus:ring-white outline-none placeholder-gray-300">
+                </div>
+                <button type="submit" class="w-full px-8 py-4 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transform hover:scale-105 transition">
+                    Join Waitlist
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-950">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p class="text-lg">Built with Supabase, Tailwind CSS, and 💜</p>
+            <p class="mt-4">© 2025 DevTools Hub. Testing Claude Code with MCPs.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://froaubfpshwdfqlruevt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyb2F1YmZwc2h3ZGZxbHJ1ZXZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2NTEwMDgsImV4cCI6MjA3NjIyNzAwOH0.QaT1uXZlKeJ2z58vRAU9CmHy6pyKNHXwd15aDKCbONo';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allTools = [];
+        let currentFilter = 'all';
+
+        // Load tools from Supabase
+        async function loadTools() {
+            const { data, error } = await supabase
+                .from('tools')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error loading tools:', error);
+                return;
+            }
+
+            allTools = data;
+            displayTools(data);
+            updateStats();
+        }
+
+        // Display tools
+        function displayTools(tools) {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = tools.map(tool => `
+                <div class="tool-card bg-gray-800 p-6 rounded-2xl shadow-lg fade-in" data-category="${tool.category}">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-gradient-to-br from-purple-500 to-pink-500 w-12 h-12 rounded-lg flex items-center justify-center text-2xl">
+                            🚀
+                        </div>
+                        <span class="px-3 py-1 bg-purple-600 rounded-full text-xs">${tool.category}</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">${tool.name}</h3>
+                    <p class="text-gray-400 mb-4">${tool.description}</p>
+                    <div class="flex items-center justify-between">
+                        <a href="${tool.url}" target="_blank" class="text-purple-400 hover:text-purple-300 font-semibold">
+                            Visit Tool →
+                        </a>
+                        ${tool.submitted_by ? `<span class="text-gray-500 text-sm">by ${tool.submitted_by}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter tools
+        function filterTools(category) {
+            currentFilter = category;
+            const filteredTools = category === 'all'
+                ? allTools
+                : allTools.filter(tool => tool.category === category);
+            displayTools(filteredTools);
+
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600');
+                btn.classList.add('bg-gray-700');
+            });
+            event.target.classList.remove('bg-gray-700');
+            event.target.classList.add('bg-purple-600');
+        }
+
+        // Update stats
+        async function updateStats() {
+            // Tool count
+            document.getElementById('toolCount').textContent = allTools.length;
+
+            // Waitlist count
+            const { count } = await supabase
+                .from('waitlist')
+                .select('*', { count: 'exact', head: true });
+            document.getElementById('waitlistCount').textContent = count || 0;
+        }
+
+        // Submit tool form
+        document.getElementById('submitToolForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const tool = {
+                name: document.getElementById('toolName').value,
+                description: document.getElementById('toolDescription').value,
+                url: document.getElementById('toolUrl').value,
+                category: document.getElementById('toolCategory').value,
+                submitted_by: document.getElementById('submitterName').value || 'Anonymous'
+            };
+
+            const { error } = await supabase.from('tools').insert([tool]);
+
+            if (error) {
+                alert('Error submitting tool: ' + error.message);
+            } else {
+                alert('Tool submitted successfully! 🎉');
+                e.target.reset();
+                loadTools();
+            }
+        });
+
+        // Waitlist form
+        document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const waitlistEntry = {
+                name: document.getElementById('waitlistName').value,
+                email: document.getElementById('waitlistEmail').value,
+                role: document.getElementById('waitlistRole').value
+            };
+
+            const { error } = await supabase.from('waitlist').insert([waitlistEntry]);
+
+            if (error) {
+                if (error.code === '23505') {
+                    alert('This email is already on the waitlist!');
+                } else {
+                    alert('Error joining waitlist: ' + error.message);
+                }
+            } else {
+                alert('Welcome to the community! 🎉');
+                e.target.reset();
+                updateStats();
+            }
+        });
+
+        // Scroll to section
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Track page view
+        async function trackPageView() {
+            await supabase.from('page_views').insert([{ page: 'landing' }]);
+        }
+
+        // Initialize
+        loadTools();
+        trackPageView();
+    </script>
+</body>
+</html>
