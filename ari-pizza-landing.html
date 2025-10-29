@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ari's Homemade Pizzas - Fresh, Handcrafted, Delicious</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d32f2f;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #d32f2f 0%, #f57c00 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" fill-opacity="0.1" d="M0,0 C150,80 350,80 500,50 C650,20 850,20 1000,50 C1150,80 1350,80 1500,0 L1500,120 L0,120 Z"></path></svg>') repeat-x bottom;
+            background-size: 1500px 120px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #d32f2f;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 2rem;
+            background: #fff;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: #d32f2f;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .highlight {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-left: 4px solid #f57c00;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+
+        .about-image {
+            text-align: center;
+            font-size: 10rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 100px 2rem;
+            background: linear-gradient(to bottom, #fff 0%, #f5f5f5 100%);
+        }
+
+        .menu h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #d32f2f;
+            margin-bottom: 3rem;
+        }
+
+        .menu-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .menu-item-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item .price {
+            font-size: 1.3rem;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 2rem;
+            background: linear-gradient(135deg, #f57c00 0%, #d32f2f 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item-icon {
+            font-size: 2.5rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            font-size: 2rem;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🍕 Ari's Pizzas</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Order</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Fresh Homemade Pizzas</h1>
+            <p>Crafted with passion by 13-year-old chef Ari. Every pizza is made from scratch with love and the finest ingredients!</p>
+            <a href="#contact" class="cta-button">Order Your Pizza</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Meet Ari</h2>
+                <p>At just 13 years old, Ari has discovered his passion for cooking and baking. What started as a love for making pizzas at home has grown into a dream of opening a successful food truck.</p>
+                <p>Every pizza Ari makes is crafted with care, using fresh ingredients and homemade dough. His dedication to quality and his genuine love for the craft shines through in every bite.</p>
+                <div class="highlight">
+                    <strong>🎯 The Dream:</strong> To bring delicious, handcrafted pizzas to your neighborhood with a mobile food truck. Help support a young entrepreneur following his passion!
+                </div>
+            </div>
+            <div class="about-image">
+                🍕
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <h2>Our Pizzas</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="menu-item-icon">🧀</div>
+                <h3>Classic Margherita</h3>
+                <p>Fresh mozzarella, tomato sauce, basil, and olive oil on our signature homemade dough</p>
+                <div class="price">Contact for pricing</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🍖</div>
+                <h3>Pepperoni Supreme</h3>
+                <p>Generous pepperoni, mozzarella, and our special tomato sauce blend</p>
+                <div class="price">Contact for pricing</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">🌱</div>
+                <h3>Veggie Delight</h3>
+                <p>Fresh vegetables, mushrooms, bell peppers, onions, and olives</p>
+                <div class="price">Contact for pricing</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-icon">⭐</div>
+                <h3>Ari's Special</h3>
+                <p>Chef Ari's signature creation with a unique blend of toppings</p>
+                <div class="price">Contact for pricing</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Ready to Order?</h2>
+        <p>Support a young chef following his dreams! Get in touch to place your order or learn more about Ari's homemade pizzas.</p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-item-icon">📱</div>
+                <a href="tel:+1234567890">Call: (123) 456-7890</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <a href="mailto:ari.pizzas@email.com">ari.pizzas@email.com</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <span>Your City, Your Area</span>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#" class="social-link">📘</a>
+            <a href="#" class="social-link">📸</a>
+            <a href="#" class="social-link">🐦</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Ari's Homemade Pizzas. Made with ❤️ and lots of passion!</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
