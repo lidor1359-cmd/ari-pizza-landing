@@ -1,548 +1,293 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzari - Fresh, Handcrafted, Delicious</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
-            background-attachment: fixed;
-        }
-
-        body::before {
-            content: '🍕';
-            position: fixed;
-            font-size: 50px;
-            opacity: 0.03;
-            z-index: -1;
-            animation: pizzaFloat 20s infinite;
-            top: 10%;
-            left: 10%;
-        }
-
-        body::after {
-            content: '🍕';
-            position: fixed;
-            font-size: 80px;
-            opacity: 0.03;
-            z-index: -1;
-            animation: pizzaFloat 25s infinite reverse;
-            bottom: 20%;
-            right: 15%;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #d32f2f;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #d32f2f;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #c62828 0%, #ff6f00 50%, #ffd54f 100%);
-            color: white;
-            padding: 150px 2rem 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(255, 87, 34, 0.3);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" fill-opacity="0.1" d="M0,0 C150,80 350,80 500,50 C650,20 850,20 1000,50 C1150,80 1350,80 1500,0 L1500,120 L0,120 Z"></path></svg>') repeat-x bottom;
-            background-size: 1500px 120px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s backwards;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #d32f2f;
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease 0.4s backwards;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        /* About Section */
-        .about {
-            padding: 100px 2rem;
-            background: #fff;
-        }
-
-        .about-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 2.5rem;
-            color: #d32f2f;
-            margin-bottom: 1rem;
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        .highlight {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            padding: 1.5rem;
-            border-left: 4px solid #ff6f00;
-            margin-top: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.2);
-        }
-
-        .about-image {
-            text-align: center;
-            font-size: 10rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Menu Section */
-        .menu {
-            padding: 100px 2rem;
-            background: linear-gradient(to bottom, #fff8f0 0%, #ffe8d6 100%);
-            position: relative;
-        }
-
-        .menu::before {
-            content: '🍕 🧀 🍅 🌿';
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            opacity: 0.1;
-        }
-
-        .menu h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #d32f2f;
-            margin-bottom: 3rem;
-        }
-
-        .menu-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .menu-item {
-            background: linear-gradient(135deg, #ffffff 0%, #fff8f0 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 111, 0, 0.15);
-            border: 2px solid transparent;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(255, 87, 34, 0.3);
-            border: 2px solid #ff6f00;
-            background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
-        }
-
-        .menu-item-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .menu-item h3 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .menu-item p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .menu-item .price {
-            font-size: 1.3rem;
-            color: #ff5722;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(255, 87, 34, 0.2);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 2rem;
-            background: linear-gradient(135deg, #ff6f00 0%, #ff5722 50%, #c62828 100%);
-            color: white;
-            text-align: center;
-            box-shadow: 0 -10px 40px rgba(255, 87, 34, 0.3);
-        }
-
-        .contact h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-            margin-top: 3rem;
-        }
-
-        .contact-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-item-icon {
-            font-size: 2.5rem;
-        }
-
-        .contact-item a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .social-link {
-            font-size: 2rem;
-            color: white;
-            transition: transform 0.3s;
-        }
-
-        .social-link:hover {
-            transform: scale(1.2);
-        }
-
-        /* Footer */
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @keyframes pizzaFloat {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(10px, -10px) rotate(5deg);
-            }
-            50% {
-                transform: translate(-5px, -20px) rotate(-5deg);
-            }
-            75% {
-                transform: translate(-10px, -10px) rotate(3deg);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">🍕 Pizzari</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#contact">Order</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Fresh Homemade Pizzas</h1>
-            <p>Crafted with passion by young chef Ari. Every pizza is made from scratch with love and the finest ingredients!</p>
-            <a href="#contact" class="cta-button">Order Your Pizza</a>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="about-content">
-            <div class="about-text">
-                <h2>Meet Ari</h2>
-                <p>Ari has discovered his passion for cooking and baking. What started as a love for making pizzas at home has grown into a dream of opening a successful food truck.</p>
-                <p>Every pizza Ari makes is crafted with care, using fresh ingredients and homemade dough. His dedication to quality and his genuine love for the craft shines through in every bite.</p>
-                <div class="highlight">
-                    <strong>🎯 The Dream:</strong> To bring delicious, handcrafted pizzas to your neighborhood with a mobile food truck. Help support a young entrepreneur following his passion!
-                </div>
-            </div>
-            <div class="about-image">
-                🍕
-            </div>
-        </div>
-    </section>
-
-    <section id="menu" class="menu">
-        <h2>Our Pizzas</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <div class="menu-item-icon">🧀</div>
-                <h3>Classic Margherita</h3>
-                <p>Fresh mozzarella, tomato sauce, basil, and olive oil on our signature homemade dough</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🍖</div>
-                <h3>Pepperoni Supreme</h3>
-                <p>Generous pepperoni, mozzarella, and our special tomato sauce blend</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🌱</div>
-                <h3>Veggie Delight</h3>
-                <p>Fresh vegetables, mushrooms, bell peppers, onions, and olives</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🍄</div>
-                <h3>Four Cheese</h3>
-                <p>Mozzarella, parmesan, gorgonzola, and ricotta with fresh herbs</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🔥</div>
-                <h3>Spicy Diavola</h3>
-                <p>Hot salami, jalapeños, chili flakes, mozzarella, and spicy tomato sauce</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🍗</div>
-                <h3>BBQ Chicken</h3>
-                <p>Grilled chicken, BBQ sauce, red onions, cilantro, and mozzarella</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🥓</div>
-                <h3>Meat Lovers</h3>
-                <p>Pepperoni, sausage, bacon, ham, and ground beef with extra cheese</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">🍍</div>
-                <h3>Hawaiian</h3>
-                <p>Ham, pineapple, mozzarella, and tomato sauce</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-            <div class="menu-item">
-                <div class="menu-item-icon">⭐</div>
-                <h3>Ari's Special</h3>
-                <p>Chef Ari's signature creation with a unique blend of toppings</p>
-                <div class="price">Contact for pricing</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <h2>Ready to Order?</h2>
-        <p>Support a young chef following his dreams! Get in touch to place your order or learn more about Ari's homemade pizzas.</p>
-
-        <div class="contact-info">
-            <div class="contact-item">
-                <div class="contact-item-icon">📱</div>
-                <a href="tel:+972542511068">Call: (+972-54) 251-1068</a>
-            </div>
-            <div class="contact-item">
-                <div class="contact-item-icon">✉️</div>
-                <a href="mailto:pizzari@email.com">pizzari@email.com</a>
-            </div>
-            <div class="contact-item">
-                <div class="contact-item-icon">📍</div>
-                <span>Ashdod, Israel</span>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="#" class="social-link">📘</a>
-            <a href="#" class="social-link">📸</a>
-            <a href="#" class="social-link">🐦</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Pizzari. Made with ❤️ and lots of passion!</p>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            }
-        });
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pizzari - Handcrafted Pizza, Straight From Ari's Kitchen.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#D95550",
+              "background-light": "#FDF8F0",
+              "background-dark": "#221510",
+              "text-light": "#333333",
+              "text-dark": "#FDF8F0",
+              "sage-green": "#8A9A5B",
+              "golden-yellow": "#FFC72C",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
     </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center p-4">
+<div class="flex size-10 shrink-0 items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl">local_pizza</span>
+</div>
+<h2 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] flex-1 ml-2">Pizzari</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-text-light dark:text-text-dark gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<div class="@container">
+<div class="@[480px]:p-4 p-0">
+<div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZ5XmfbpxtvnWtBxf65yEx1MhTiTj5r-egpnC7Om0GuZuSKi8K1z-fpszKJBdOuj-WY45x7Z4zW4mraho7Ns0Uk0DLYMkKVPdC0bZPM4ubVLqMnZfbwp6yD-oGbfxe3WxXMkBSaknhWz2hBtZQ3pi9qGMVUoXKOvhnVG9eREQSLDWxyvDTbhKEeXH9c2-0oIEVe97dlDJnq_dSJbunFajpuCajaEAi5IfktW8ZE5tBZKoIsGMDpV-nwOSvOYhlHOnxN-lt7ZOReQ8");'>
+<div class="flex flex-col gap-2 text-center">
+<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">Handcrafted Pizza, Straight From Ari's Kitchen.</h1>
+<h2 class="text-white text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">Taste the Passion in Every Slice.</h2>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+</div>
+<!-- About Ari Card -->
+<div class="p-4">
+<div class="flex flex-col-reverse md:flex-row items-stretch justify-between gap-6 rounded-lg bg-white/50 dark:bg-white/10 p-4">
+<div class="flex flex-[2_2_0px] flex-col gap-4 justify-center">
+<div class="flex flex-col gap-1">
+<p class="text-text-light dark:text-text-dark text-2xl font-bold leading-tight">Meet Ari</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-base font-normal leading-normal">Ari has discovered his passion for cooking and baking. What started as a love for making pizzas at home has grown into a dream of opening a successful food truck. Every pizza is crafted with care, using fresh ingredients and homemade dough. His dedication to quality and genuine love for the craft shines through in every bite.</p>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex items-center gap-2 text-text-light/80 dark:text-text-dark/80">
+<span class="material-symbols-outlined text-xl">phone</span>
+<a href="tel:+972542511068" class="hover:text-primary">(+972-54) 251-1068</a>
+</div>
+<div class="flex items-center gap-2 text-text-light/80 dark:text-text-dark/80">
+<span class="material-symbols-outlined text-xl">location_on</span>
+<span>Ashdod, Israel</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex-1 md:aspect-auto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_1sP7Xng9DXGaCuE4GiZcUl-S4CMGN1wrdVP7odt1ktjX_UZRkY5n7yFGBZkAILjSu10SPge_QScCdrbBvnLywW-crjFlzb9VnvunyH3pZDJ4vVM6fQVYZIOD_Ufap_bqZXy0dXZ0mz7O7hQMKmo42FUPZ934ZnnGu3Gjb-dN6xtXm3E97uZnjJz-ynZaGk0UbdabbEy1miWLTRYwx6SDiz6dJLDkbh3HyVujGEB1IsqU1Dbvg0j5595WIcRUYwEfaikOH4ikSys");'></div>
+</div>
+</div>
+<!-- Signature Pizzas Section -->
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Our Signature Pizzas</h2>
+<div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+<div class="flex items-stretch px-4 pb-4 gap-4">
+<!-- Classic Margherita -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-rJXfANTj41rvNxwKXnqnQBvA3NiKQdabknhQStlwTJeFGKNKgyq0K7Xp3E38wUYHF6FmqVNhhM0mihB7O6pbxMsnWxTnVNgvz6R4nLip4eY_e2sK6ov7aIyMEjBv8IyxeaNvKsN_HG_cf0EeA9cAACMZ4t_mT6jNpR_ev_kDoiO5Lw_QYyG3Bo7WmeAKvXBpimzSFrtDYNLpeW_TlOOs6f4EVO_IDRPRVQJumg1XAhvWrLdhQlBJrS_JMD5IB40TWcU72pu-gVg");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Classic Margherita</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Fresh mozzarella, tomato sauce, basil</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Pepperoni Supreme -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBf9hKMJbAnhsTh8eKA-fsgvn5T74Dfhah52qnGnLAzwBFwdutOL_0z7SITCP33JBmwOwHr_JGimkSW-2P_8rq1oSby9IuLIGPnQsILoFYTnoo6DRpCuRGfQBHDBWRI0JmMm2muq0-7w6fIBtcq1t1YmVe9ChQ_zjDt08aQCmKxdmzVPK1unVLCfZqdEncxnVbMGQ3M0eSLPqm5oulSJ-LW_NHL5sY7GylNbdm6E-Us4hS1DCkLAPVuXPLllHY2mGe6xHScgc4I6po");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Pepperoni Supreme</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Generous pepperoni, mozzarella, special sauce</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Veggie Delight -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmw-49mI7M2e-jybQ-aTbooaX50O4WGIc23DKHrf9uQYNPoFbE98R75wIIVdxlBFOZkHBMKCv9QVWAkRjQQ1hkS1p6FCvrLW59dx3jy6-6IGlLBtEmiUh8utY1lMA4fBm63PN4s51g6UknsJhLDs0LIT0D9GDMv-qKuiLDYZeUuIZds5B9mtWJ8cevFmJDSAHJckSXc5m18I2vZrkCmZ13F2GoauwcGD2uXcX4LOLFmtgEwQL_HCzmd-aDUlw7evOQRiromRsMpR8");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Veggie Delight</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Fresh vegetables, mushrooms, bell peppers, olives</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Four Cheese -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Four Cheese</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Mozzarella, parmesan, gorgonzola, ricotta</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Spicy Diavola -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Spicy Diavola</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Hot salami, jalapeños, chili flakes, spicy sauce</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- BBQ Chicken -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">BBQ Chicken</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Grilled chicken, BBQ sauce, red onions, cilantro</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Meat Lovers -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Meat Lovers</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Pepperoni, sausage, bacon, ham, ground beef</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Hawaiian -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Hawaiian</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Ham, pineapple, mozzarella, tomato sauce</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+<!-- Ari's Special -->
+<div class="flex h-full flex-1 flex-col gap-4 rounded-lg bg-white/50 dark:bg-white/10 shadow-[0_0_12px_rgba(0,0,0,0.05)] min-w-64">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" style='background-image: url("https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop");'></div>
+<div class="flex flex-col flex-1 justify-between p-4 pt-0 gap-4">
+<div>
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-normal">Ari's Special</p>
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm font-normal leading-normal">Chef Ari's signature creation with unique toppings</p>
+</div>
+<a href="tel:+972542511068" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Order Now</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Ingredient Showcase -->
+<div class="px-4 py-8">
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center mb-6">What Makes Us Special?</h2>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+<div class="flex flex-col items-center gap-2">
+<div class="flex items-center justify-center size-16 rounded-full bg-sage-green/20 dark:bg-sage-green/30 text-sage-green">
+<span class="material-symbols-outlined text-4xl">eco</span>
+</div>
+<p class="font-semibold text-text-light dark:text-text-dark">Fresh, Local Ingredients</p>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="flex items-center justify-center size-16 rounded-full bg-golden-yellow/20 dark:bg-golden-yellow/30 text-golden-yellow">
+<span class="material-symbols-outlined text-4xl">menu_book</span>
+</div>
+<p class="font-semibold text-text-light dark:text-text-dark">Authentic Dough Recipe</p>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="flex items-center justify-center size-16 rounded-full bg-primary/20 dark:bg-primary/30 text-primary">
+<span class="material-symbols-outlined text-4xl">favorite</span>
+</div>
+<p class="font-semibold text-text-light dark:text-text-dark">Made with Love</p>
+</div>
+</div>
+</div>
+<!-- Testimonials -->
+<div class="bg-white/50 dark:bg-white/10 py-12 px-4">
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center mb-6">From Our Customers</h2>
+<div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+<div class="flex items-stretch px-4 gap-4">
+<div class="flex flex-col gap-4 rounded-lg bg-background-light dark:bg-background-dark p-6 min-w-72 shadow-sm">
+<div class="flex text-golden-yellow"><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span></div>
+<p class="text-text-light/80 dark:text-text-dark/80">"Absolutely the best pizza in Ashdod. You can taste the quality in every bite!"</p>
+<p class="font-bold text-text-light dark:text-text-dark">- Sarah J.</p>
+</div>
+<div class="flex flex-col gap-4 rounded-lg bg-background-light dark:bg-background-dark p-6 min-w-72 shadow-sm">
+<div class="flex text-golden-yellow"><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span></div>
+<p class="text-text-light/80 dark:text-text-dark/80">"Ari's pizza is my new go-to. The crust is perfect, and the toppings are so fresh."</p>
+<p class="font-bold text-text-light dark:text-text-dark">- Mike P.</p>
+</div>
+<div class="flex flex-col gap-4 rounded-lg bg-background-light dark:bg-background-dark p-6 min-w-72 shadow-sm">
+<div class="flex text-golden-yellow"><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span></div>
+<p class="text-text-light/80 dark:text-text-dark/80">"Best homemade pizza! Love supporting young entrepreneurs following their dreams."</p>
+<p class="font-bold text-text-light dark:text-text-dark">- David L.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Final CTA Block -->
+<div class="p-4 py-10 text-center">
+<h2 class="text-text-light dark:text-text-dark text-3xl font-bold leading-tight tracking-[-0.015em] mb-4">Ready for a Slice?</h2>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="tel:+972542511068" class="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Call to Order</span>
+</a>
+<a href="mailto:pizzari@email.com" class="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-sage-green/80 dark:bg-sage-green text-white text-base font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Email Us</span>
+</a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white/50 dark:bg-white/10 mt-auto py-8 px-4 text-center">
+<p class="text-text-light/70 dark:text-text-dark/70 text-sm">© 2025 Pizzari. Made with ❤️ and lots of passion!</p>
+<p class="text-text-light/70 dark:text-text-dark/70 text-xs mt-2">Ashdod, Israel | (+972-54) 251-1068</p>
+<div class="flex justify-center gap-4 mt-4">
+<a class="text-text-light/70 dark:text-text-dark/70 hover:text-primary" href="#">Instagram</a>
+<a class="text-text-light/70 dark:text-text-dark/70 hover:text-primary" href="#">Facebook</a>
+<a class="text-text-light/70 dark:text-text-dark/70 hover:text-primary" href="mailto:pizzari@email.com">Contact</a>
+</div>
+</footer>
+</div>
 </body>
 </html>
