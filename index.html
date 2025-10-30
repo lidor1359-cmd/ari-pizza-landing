@@ -40,6 +40,57 @@
     body {
       min-height: max(884px, 100dvh);
     }
+
+    /* Animation styles */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
   </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
@@ -74,7 +125,7 @@
 </div>
 </div>
 <!-- About Ari Card -->
-<div class="p-4">
+<div class="p-4 fade-in">
 <div class="flex flex-col-reverse md:flex-row items-stretch justify-between gap-6 rounded-lg bg-white/50 dark:bg-white/10 p-4">
 <div class="flex flex-[2_2_0px] flex-col gap-4 justify-center">
 <div class="flex flex-col gap-1">
@@ -96,7 +147,7 @@
 </div>
 </div>
 <!-- Signature Pizzas Section -->
-<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Our Signature Pizzas</h2>
+<h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 fade-in">Our Signature Pizzas</h2>
 <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 <div class="flex items-stretch px-4 pb-4 gap-4">
 <!-- Classic Margherita -->
@@ -219,22 +270,22 @@
 </div>
 </div>
 <!-- Ingredient Showcase -->
-<div class="px-4 py-8">
+<div class="px-4 py-8 fade-in">
 <h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center mb-6">What Makes Us Special?</h2>
 <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
-<div class="flex flex-col items-center gap-2">
+<div class="flex flex-col items-center gap-2 scale-in stagger-1">
 <div class="flex items-center justify-center size-16 rounded-full bg-sage-green/20 dark:bg-sage-green/30 text-sage-green">
 <span class="material-symbols-outlined text-4xl">eco</span>
 </div>
 <p class="font-semibold text-text-light dark:text-text-dark">Fresh, Local Ingredients</p>
 </div>
-<div class="flex flex-col items-center gap-2">
+<div class="flex flex-col items-center gap-2 scale-in stagger-2">
 <div class="flex items-center justify-center size-16 rounded-full bg-golden-yellow/20 dark:bg-golden-yellow/30 text-golden-yellow">
 <span class="material-symbols-outlined text-4xl">menu_book</span>
 </div>
 <p class="font-semibold text-text-light dark:text-text-dark">Authentic Dough Recipe</p>
 </div>
-<div class="flex flex-col items-center gap-2">
+<div class="flex flex-col items-center gap-2 scale-in stagger-3">
 <div class="flex items-center justify-center size-16 rounded-full bg-primary/20 dark:bg-primary/30 text-primary">
 <span class="material-symbols-outlined text-4xl">favorite</span>
 </div>
@@ -243,7 +294,7 @@
 </div>
 </div>
 <!-- Testimonials -->
-<div class="bg-white/50 dark:bg-white/10 py-12 px-4">
+<div class="bg-white/50 dark:bg-white/10 py-12 px-4 fade-in">
 <h2 class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center mb-6">From Our Customers</h2>
 <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 <div class="flex items-stretch px-4 gap-4">
@@ -266,7 +317,7 @@
 </div>
 </div>
 <!-- Final CTA Block -->
-<div class="p-4 py-10 text-center">
+<div class="p-4 py-10 text-center fade-in">
 <h2 class="text-text-light dark:text-text-dark text-3xl font-bold leading-tight tracking-[-0.015em] mb-4">Ready for a Slice?</h2>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
 <a href="tel:+972542511068" class="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
@@ -289,5 +340,29 @@
 </div>
 </footer>
 </div>
+
+<script>
+// Intersection Observer for scroll animations
+document.addEventListener('DOMContentLoaded', function() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Optional: Stop observing after animation triggers
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  const animatedElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in');
+  animatedElements.forEach(el => observer.observe(el));
+});
+</script>
 </body>
 </html>
